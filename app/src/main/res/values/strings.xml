@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sudoku Solver</string>
+    <string name="find_solution">Find Solution</string>
+    <string name="clear">Clear All</string>
+</resources>
