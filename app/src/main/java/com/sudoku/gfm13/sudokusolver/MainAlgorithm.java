@@ -37,7 +37,7 @@ public class MainAlgorithm {
         }
     }
 
-    public boolean AttemptSolve()
+    public boolean AttemptSolve(boolean guess)
     {
         boolean progressMade = true;
         while (progressMade) {
@@ -56,7 +56,7 @@ public class MainAlgorithm {
         if (guessSquare == null) {
             return true;
         }
-        else {
+        else if (guess) {
             List<MainAlgorithm> searchStack = new LinkedList<>();
 
             for (Integer i : guessSquare.PossibleValues) {
@@ -65,13 +65,14 @@ public class MainAlgorithm {
                 searchStack.add(new MainAlgorithm(changedBoardState));
             }
             for (MainAlgorithm a : searchStack) {
-                if (a.AttemptSolve()){
+                if (a.AttemptSolve(true)){
                     solution = a;
                     return true;
                 }
             }
             return false;
         }
+        else return false;
     }
 
     public int [][] GetBoardState()

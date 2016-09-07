@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     if (button.Handled == clicked) {
                         if (button == lastClicked) {
                             button.CycleValue();
+                            button.Select();
                         }
                         else {
                             if (lastClicked != null){
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                             lastClicked = button;
                             button.Select();
                         }
-
+                        suggestNewValues();
                     }
                 }
             }
@@ -120,7 +121,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SolvePressed(View view) {
-
+        if (lastClicked != null){
+            lastClicked.Deselect();
+        }
         int[][] values = new int[9][9];
         for (ButtonHandler button : buttons) {
             values[button.X][button.Y] = button.Value;
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainAlgorithm solver = new MainAlgorithm(values);
 
-        if (solver.AttemptSolve()) {
+        if (solver.AttemptSolve(true)) {
             values = solver.GetBoardState();
 
             for (ButtonHandler buttonHandler : buttons) {
@@ -147,6 +150,26 @@ public class MainActivity extends AppCompatActivity {
     {
         if (lastClicked != null) {
             lastClicked.SetValue(valueButtons.indexOf(view));
+            lastClicked.Select();
+            suggestNewValues();
+        }
+
+    }
+
+    public void suggestNewValues(){
+
+        int[][] values = new int[9][9];
+        for (ButtonHandler button : buttons) {
+            values[button.X][button.Y] = button.Value;
+        }
+
+        MainAlgorithm solver = new MainAlgorithm(values);
+
+        solver.AttemptSolve(false);
+        values = solver.GetBoardState();
+
+        for (ButtonHandler buttonHandler : buttons) {
+            buttonHandler.SuggestValue(values[buttonHandler.X][buttonHandler.Y]);
         }
 
     }

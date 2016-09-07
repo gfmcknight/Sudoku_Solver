@@ -44,6 +44,15 @@ public class ButtonHandler {
             ButtonText = "";
         }
         Handled.setText(ButtonText);
+        Handled.setTextColor(Color.BLACK);
+        Handled.setBackground(standardBackground);
+    }
+
+    public void SuggestValue(int value){
+        if (Value == 0 && value > 0) {
+            Handled.setText(Integer.toString(value));
+            Handled.setTextColor(Color.GRAY);
+        }
     }
 
     public  void Select(){
@@ -52,7 +61,12 @@ public class ButtonHandler {
     }
 
     public void Deselect(){
-        Handled.setTextColor(Color.BLACK);
+        if (Value > 0) {
+            Handled.setTextColor(Color.BLACK);
+        }
+        else {
+            Handled.setTextColor(Color.DKGRAY);
+        }
         Handled.setBackground(standardBackground);
     }
 }
